@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -26,7 +27,33 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+         'name' => 'required',
+         'email' => 'required|email|unique:users,email',
+         'identity_number' => 'required|unique:users,identity_number',
+         'role' => 'required',
+         'phone_number' => 'required|min:11|max:15|unique:users,phone_number'
+        ]);
+
+        $data = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make('lp3ipsm'),
+            'identity_number' => $request->identity_number,
+            'birthplace' => $request->birthplace,
+            'gender' => $request->gender,
+            'phone_number' => $request->phone_number,
+            'role' => $request->role,
+            'address' => $request->address,
+            'birthdate' => $request->birthdate,
+            'avatar' => $request->avatar,
+            'major_id' => $request->major_id
+        ]);
+
+        return response()->json([
+            'message' => 'Tambah Data Berhasil',
+            'data' => $data
+        ], 201);
     }
 
     /**
@@ -37,7 +64,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        return $user;
     }
 
     /**
@@ -49,7 +76,31 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' => "required|email",
+            'identity_number' => "required",
+            'role' => 'required',
+            'phone_number' => "required|min:11|max:15"
+           ]);
+
+        $user->fill([
+            'name' => $request->name,
+            'birthplace' => $request->birthplace,
+            'gender' => $request->gender,
+            'role' => $request->role,
+            'address' => $request->address,
+            'birthdate' => $request->birthdate,
+            'avatar' => $request->avatar,
+            'major_id' => $request->major_id
+        ]);
+
+        $user->save();
+
+        return response()->json([
+            'message' => 'Ubah data Berhasil',
+            'data' => $user
+        ], 200);
     }
 
     /**
@@ -60,6 +111,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+
+        return response()->json([
+            'message' => 'Hapus data Berhasil'
+        ], 200);
     }
 }
