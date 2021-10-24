@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('auth')->group(function () {
-    Route::post('/login', 'App\Http\Controllers\API\LoginController');
+    Route::post('/login', 'App\Http\Controllers\API\LoginController')->name('api.auth.login');
 });
 
 Route::group(['middleware' => 'auth:sanctum'], function(){
