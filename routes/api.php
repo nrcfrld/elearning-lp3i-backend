@@ -21,5 +21,6 @@ Route::prefix('auth')->group(function () {
 Route::group(['middleware' => 'auth:sanctum'], function(){
     // Authenticated Only
     Route::resource('users', 'App\Http\Controllers\API\UserController');
+    Route::resource('configurations', 'App\Http\Controllers\API\ConfigurationController');
 });
 
