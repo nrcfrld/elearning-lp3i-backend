@@ -41,14 +41,13 @@ class StudyProgramController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  StudyProgram  $studyprogram
      * @return \Illuminate\Http\Response
      */
-    public function show(StudyProgram $studyprogram)
+    public function show(StudyProgram $study_program)
     {
-        return $studyprogram;
         return response()->json([
-            'data' => $studyprogram
+            'data' => $study_program
         ]);
     }
 
@@ -56,32 +55,32 @@ class StudyProgramController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  StudyProgram  $studyprogram
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, studyprogram $studyprogram)
+    public function update(Request $request, StudyProgram $study_program)
     {
         $request->validate([
             'name' => 'required'
         ]);
 
-        $studyprogram->update($request->all());
+        $study_program->update($request->all());
 
         return response()->json([
             'message' => 'Ubah data berhasil',
-            'data' => $studyprogram
+            'data' => $study_program
         ], 201);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  StudyProgram  $studyprogram
      * @return \Illuminate\Http\Response
      */
-    public function destroy(StudyProgram $studyprogram)
+    public function destroy(StudyProgram $study_program)
     {
-        $studyprogram->delete();
+        $study_program->delete();
 
         return response()->json([
             'message' => 'Hapus data Berhasil'

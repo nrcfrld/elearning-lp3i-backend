@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Configuration;
 use Illuminate\Database\Seeder;
 
 class ConfigurationSeeder extends Seeder
@@ -13,6 +14,9 @@ class ConfigurationSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Configuration::create([
+            'name' => 'SITE_NAME',
+            'value' => 'LP3I E-learning'
+        ]);
     }
 }
