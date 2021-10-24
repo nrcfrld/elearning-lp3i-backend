@@ -18,9 +18,9 @@ Route::prefix('auth')->group(function () {
     Route::post('/login', 'App\Http\Controllers\API\LoginController')->name('api.auth.login');
 });
 
-Route::group(['middleware' => 'auth:sanctum'], function(){
+Route::group(['middleware' => 'auth:sanctum'], function () {
     // Authenticated Only
     Route::resource('users', 'App\Http\Controllers\API\UserController');
     Route::resource('configurations', 'App\Http\Controllers\API\ConfigurationController');
+    Route::resource('study-program', 'App\Http\Controllers\API\StudyProgramController');
 });
-
