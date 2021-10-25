@@ -24,4 +24,5 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('configurations', 'App\Http\Controllers\API\ConfigurationController');
     Route::resource('study-program', 'App\Http\Controllers\API\StudyProgramController');
     Route::resource('majors', 'App\Http\Controllers\API\MajorController');
+    Route::resource('classrooms', 'App\Http\Controllers\API\ClassroomController');
 });
