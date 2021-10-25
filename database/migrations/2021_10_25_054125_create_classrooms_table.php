@@ -17,8 +17,9 @@ class CreateClassroomsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('code');
-            $table->integer('major_id');
             $table->timestamps();
+
+            $table->integer('major_id');
         });
     }
 
