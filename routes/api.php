@@ -27,3 +27,5 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('classrooms', 'App\Http\Controllers\API\ClassroomController');
     Route::resource('subjects', 'App\Http\Controllers\API\SubjectController');
 });
+
+// test github
