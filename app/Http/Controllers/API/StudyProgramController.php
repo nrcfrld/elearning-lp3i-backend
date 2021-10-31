@@ -41,7 +41,7 @@ class StudyProgramController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  StudyProgram  $studyprogram
+     * @param  StudyProgram  $study_program
      * @return \Illuminate\Http\Response
      */
     public function show(StudyProgram $study_program)
@@ -55,7 +55,7 @@ class StudyProgramController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  StudyProgram  $studyprogram
+     * @param  StudyProgram  $study_program
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, StudyProgram $study_program)
