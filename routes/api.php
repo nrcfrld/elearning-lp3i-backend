@@ -29,6 +29,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('notifications', 'App\Http\Controllers\API\NotificationController')->except([
         'edit', 'update'
     ]);
+    Route::resource('help_categories', 'App\Http\Controllers\API\HelpCategoryController')->except(['edit']);
+    Route::resource('helps', 'App\Http\Controllers\API\HelpController')->except(['edit']);
 });
 
 // test github
