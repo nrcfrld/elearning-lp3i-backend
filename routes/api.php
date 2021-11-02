@@ -20,12 +20,15 @@ Route::prefix('auth')->group(function () {
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     // Authenticated Only
-    Route::resource('users', 'App\Http\Controllers\API\UserController');
-    Route::resource('configurations', 'App\Http\Controllers\API\ConfigurationController');
-    Route::resource('study-program', 'App\Http\Controllers\API\StudyProgramController');
-    Route::resource('majors', 'App\Http\Controllers\API\MajorController');
-    Route::resource('classrooms', 'App\Http\Controllers\API\ClassroomController');
-    Route::resource('subjects', 'App\Http\Controllers\API\SubjectController');
+    Route::resource('users', 'App\Http\Controllers\API\UserController')->except(['edit']);
+    Route::resource('configurations', 'App\Http\Controllers\API\ConfigurationController')->except(['edit']);
+    Route::resource('study-program', 'App\Http\Controllers\API\StudyProgramController')->except(['edit']);
+    Route::resource('majors', 'App\Http\Controllers\API\MajorController')->except(['edit']);
+    Route::resource('classrooms', 'App\Http\Controllers\API\ClassroomController')->except(['edit']);
+    Route::resource('subjects', 'App\Http\Controllers\API\SubjectController')->except(['edit']);
+    Route::resource('notifications', 'App\Http\Controllers\API\NotificationController')->except([
+        'edit', 'update'
+    ]);
 });
 
 // test github
