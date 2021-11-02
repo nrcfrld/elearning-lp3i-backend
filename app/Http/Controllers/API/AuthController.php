@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
-class LoginController extends Controller
+class AuthController extends Controller
 {
     /**
      * Handle the incoming request.
@@ -14,7 +14,7 @@ class LoginController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(Request $request)
+    public function login(Request $request)
     {
         $attr = $request->validate([
             'email' => 'required',
@@ -28,7 +28,19 @@ class LoginController extends Controller
         }
 
         return response()->json([
-            'token' => auth()->user()->createToken('API TOKEN '. $request->email)->plainTextToken
+            'access_token' => auth()->user()->createToken('API TOKEN '. $request->email)->plainTextToken,
+            'user' => auth()->user()->load('roles.permissions')
+        ], 200);
+    }
+
+    public function verify(){
+        $user = auth()->user();
+
+        $user->tokens()->delete();
+
+        return response()->json([
+            'access_token' => $user->createToken('API TOKEN '. $user->email)->plainTextToken,
+            'user' => $user->load('roles.permissions')
         ], 200);
     }
 }
