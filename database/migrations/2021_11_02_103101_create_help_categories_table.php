@@ -16,6 +16,8 @@ class CreateHelpCategoriesTable extends Migration
         Schema::create('help_categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('description');
+            $table->integer('parent_id')->nullable();
             $table->timestamps();
         });
     }

@@ -31,5 +31,3 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('help_categories', 'App\Http\Controllers\API\HelpCategoryController');
     Route::apiResource('helps', 'App\Http\Controllers\API\HelpController');
 });
-
-// test github

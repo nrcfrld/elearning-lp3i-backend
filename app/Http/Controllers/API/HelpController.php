@@ -13,9 +13,9 @@ class HelpController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(Help::paginate());
+        return response()->json(Help::where('is_faq', $request->is_faq)->paginate());
     }
 
     /**

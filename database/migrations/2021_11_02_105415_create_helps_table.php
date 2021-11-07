@@ -17,6 +17,7 @@ class CreateHelpsTable extends Migration
             $table->id();
             $table->string('name');
             $table->longText('content');
+            $table->boolean('is_faq');
             $table->timestamps();
 
             $table->integer('help_category_id')->foreign('help_category_id')->references('id')->on('help_categories')->onUpdate('cascade')->onDelete('cascade');
