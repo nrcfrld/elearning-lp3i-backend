@@ -17,7 +17,13 @@ class CreateSubjectsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('code');
+            $table->string('generation');
+            $table->integer('campus_id');
+            $table->integer('semester');
             $table->integer('sks');
+            $table->string('day');
+            $table->time('start_at');
+            $table->time('end_at');
             $table->timestamps();
 
             $table->integer('lecture_id');

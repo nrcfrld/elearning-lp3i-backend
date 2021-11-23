@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\Subject;
+use App\Models\Announcement;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class SubjectController extends Controller
+class AnnouncementController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        return response()->json(Subject::paginate());
+        return response()->json(Announcement::paginate());
     }
 
     /**
@@ -27,20 +27,12 @@ class SubjectController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'code' => 'required',
-            'generation' => 'required',
-            'campus_id' => 'required',
-            'semester' => 'required',
-            'lecture_id' => 'required',
-            'sks' => 'required',
-            'day' => 'required',
-            'start_at' => 'required',
-            'end_at' => 'required'
+            'title' => 'required',
+            'body' => 'required'
 
         ]);
 
-        $data = Subject::create($request->all());
+        $data = Announcement::create($request->all());
 
         return response()->json([
             'message' => 'Tambah data berhasil',
@@ -51,13 +43,13 @@ class SubjectController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Subject  $subject
+     * @param  \App\Models\Announcement  $announcement
      * @return \Illuminate\Http\Response
      */
-    public function show(Subject $subject)
+    public function show(Announcement $announcement)
     {
         return response()->json([
-            'data' => $subject
+            'data' => $announcement
         ]);
     }
 
@@ -65,42 +57,34 @@ class SubjectController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Subject  $subject
+     * @param  \App\Models\Announcement  $announcement
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Subject $subject)
+    public function update(Request $request, Announcement $announcement)
     {
         $request->validate([
-            'name' => 'required',
-            'code' => 'required',
-            'generation' => 'required',
-            'campus_id' => 'required',
-            'semester' => 'required',
-            'lecture_id' => 'required',
-            'sks' => 'required',
-            'day' => 'required',
-            'start_at' => 'required',
-            'end_at' => 'required'
+            'title' => 'required',
+            'body' => 'required'
 
         ]);
 
-        $subject->update($request->all());
+        $announcement->update($request->all());
 
         return response()->json([
             'message' => 'Ubah data berhasil',
-            'data' => $subject
+            'data' => $announcement
         ], 201);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Subject  $subject
+     * @param  \App\Models\Announcement  $announcement
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Subject $subject)
+    public function destroy(Announcement $announcement)
     {
-        $subject->delete();
+        $announcement->delete();
 
         return response()->json([
             'message' => 'Hapus data Berhasil'
