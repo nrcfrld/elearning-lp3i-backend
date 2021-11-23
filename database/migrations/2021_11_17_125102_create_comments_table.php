@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHelpCategoriesTable extends Migration
+class CreateCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateHelpCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('help_categories', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('description');
-            $table->integer('parent_id')->nullable();
+            $table->text('body');
             $table->timestamps();
+
+            $table->integer('meet_id');
+            $table->integer('reply_id');
+            $table->integer('created_by');
         });
     }
 
@@ -29,6 +31,6 @@ class CreateHelpCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('help_categories');
+        Schema::dropIfExists('comments');
     }
 }

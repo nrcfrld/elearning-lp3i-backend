@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\Help;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class HelpController extends Controller
+class CommentController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        return response()->json(Help::where('is_faq', $request->is_faq)->paginate());
+        return response()->json(Comment::paginate(), 200);
     }
 
     /**
@@ -27,12 +27,13 @@ class HelpController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'content' => 'required'
-
+            'body' => 'required',
+            'meet_id' => 'required',
+            'reply_id' => 'required',
+            'created_by' => 'required'
         ]);
 
-        $data = Help::create($request->all());
+        $data = Comment::create($request->all());
 
         return response()->json([
             'message' => 'Tambah data berhasil',
@@ -43,15 +44,13 @@ class HelpController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Help  $help
+     * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function show(Help $help)
+    public function show(Comment $comment)
     {
-        $help->load('helpcategory');
-
         return response()->json([
-            'data' => $help
+            'data' => $comment
         ]);
     }
 
@@ -59,33 +58,35 @@ class HelpController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Help  $help
+     * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Help $help)
+    public function update(Request $request, Comment $comment)
     {
         $request->validate([
-            'name' => 'required',
-            'content' => 'required'
+            'body' => 'required',
+            'meet_id' => 'required',
+            'reply_id' => 'required',
+            'created_by' => 'required'
         ]);
 
-        $help->update($request->all());
+        $comment->update($request->all());
 
         return response()->json([
             'message' => 'Ubah data berhasil',
-            'data' => $help
+            'data' => $comment
         ], 201);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Help  $help
+     * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Help $help)
+    public function destroy(Comment $comment)
     {
-        $help->delete();
+        $comment->delete();
 
         return response()->json([
             'message' => 'Hapus data Berhasil'
