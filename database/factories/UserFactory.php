@@ -29,7 +29,6 @@ class UserFactory extends Factory
             'birthdate' => $this->faker->date(),
             'gender' => 'Laki - Laki',
             'phone_number' => $this->faker->randomNumber(),
-            'role' => 'MAHASISWA',
             'address' => $this->faker->address(),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),

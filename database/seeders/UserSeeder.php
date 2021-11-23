@@ -14,7 +14,9 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(10)->create();
+        \App\Models\User::factory(10)->create()->each(function ($user) {
+            $user->assignRole('mahasiswa');
+        });
 
         $user = \App\Models\User::create([
             'name' => 'Staff Akademik PSM',
@@ -23,7 +25,6 @@ class UserSeeder extends Seeder
             'birthdate' => '2021-02-02 00:00:00',
             'gender' => 'Laki - Laki',
             'phone_number' => '0812312321',
-            'role' => 'ADMIN',
             'address' => 'Jalan Jalan',
             'email' => 'akademikpsm@gmail.com',
             'email_verified_at' => now(),
