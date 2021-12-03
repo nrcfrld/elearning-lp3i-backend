@@ -29,7 +29,7 @@ class CreateUsersTable extends Migration
             $table->string('avatar')->nullable();
             $table->timestamps();
 
-            $table->string('major_id')->nullable();
+            $table->string('classroom_id')->nullable();
         });
     }
 

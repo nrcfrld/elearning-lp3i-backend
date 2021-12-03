@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
+use Exception;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,7 +18,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        return response()->json(User::with('roles')->paginate(), 200);
+        return response()->json(
+            User::with('roles')->orderBy('created_at', 'desc')->paginate()
+            ,200
+        );
     }
 
     /**
@@ -27,33 +32,46 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-         'name' => 'required',
-         'email' => 'required|email|unique:users,email',
-         'identity_number' => 'required|unique:users,identity_number',
-         'role' => 'required',
-         'phone_number' => 'required|min:11|max:15|unique:users,phone_number'
-        ]);
+        try{
+            DB::beginTransaction();
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required|email|unique:users,email',
+                'identity_number' => 'required|unique:users,identity_number',
+                'role' => 'required',
+                'phone_number' => 'required|min:11|max:15|unique:users,phone_number'
+            ]);
 
-        $data = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make('lp3ipsm'),
-            'identity_number' => $request->identity_number,
-            'birthplace' => $request->birthplace,
-            'gender' => $request->gender,
-            'phone_number' => $request->phone_number,
-            'role' => $request->role,
-            'address' => $request->address,
-            'birthdate' => $request->birthdate,
-            'avatar' => $request->avatar,
-            'major_id' => $request->major_id
-        ]);
+            $data = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make('lp3ipsm'),
+                'identity_number' => $request->identity_number,
+                'birthplace' => $request->birthplace,
+                'gender' => $request->gender,
+                'phone_number' => $request->phone_number,
+                'address' => $request->address,
+                'birthdate' => $request->birthdate,
+                'avatar' => $request->avatar,
+                'classroom_id' => $request->classroom_id
+            ]);
 
-        return response()->json([
-            'message' => 'Tambah Data Berhasil',
-            'data' => $data
-        ], 201);
+            if($request->role){
+                $data->assignRole($request->role['id']);
+            }
+
+            DB::commit();
+            return response()->json([
+                'message' => 'Tambah Data Berhasil',
+                'data' => $data
+            ], 201);
+        }catch(Exception $e){
+            DB::rollBack();
+            return response()->json([
+                'message' => 'Tambah Data Berhasil',
+                'data' => $e
+            ], 500);
+        }
     }
 
     /**
