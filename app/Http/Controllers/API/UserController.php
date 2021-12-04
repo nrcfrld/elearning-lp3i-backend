@@ -38,9 +38,15 @@ class UserController extends Controller
                 'name' => 'required',
                 'email' => 'required|email|unique:users,email',
                 'identity_number' => 'required|unique:users,identity_number',
-                'role' => 'required',
+                'role_id' => 'required',
                 'phone_number' => 'required|min:11|max:15|unique:users,phone_number'
             ]);
+
+            if($request->role_id == 3){
+                $request->validate([
+                    'classroom_id' => 'required'
+                ]);
+            }
 
             $data = User::create([
                 'name' => $request->name,
@@ -56,9 +62,7 @@ class UserController extends Controller
                 'classroom_id' => $request->classroom_id
             ]);
 
-            if($request->role){
-                $data->assignRole($request->role['id']);
-            }
+            $data->assignRole($request->role_id);
 
             DB::commit();
             return response()->json([
@@ -68,7 +72,7 @@ class UserController extends Controller
         }catch(Exception $e){
             DB::rollBack();
             return response()->json([
-                'message' => 'Tambah Data Berhasil',
+                'message' => 'Tambah Data Gagal',
                 'data' => $e
             ], 500);
         }
