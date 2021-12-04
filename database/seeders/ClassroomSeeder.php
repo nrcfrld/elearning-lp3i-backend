@@ -14,10 +14,17 @@ class ClassroomSeeder extends Seeder
      */
     public function run()
     {
-        Classroom::create([
-            'name' => 'Informatika Komputer 12',
-            'code' => 'IK-12',
-            'major_id' => 1
+        Classroom::insert([
+            [
+                'name' => 'Informatika Komputer 12',
+                'code' => 'IK-12',
+                'major_id' => 1
+            ],
+            [
+                'name' => 'Informatika Komputer 13',
+                'code' => 'IK-13',
+                'major_id' => 1
+            ]
         ]);
     }
 }
