@@ -28,12 +28,13 @@ class AuthController extends Controller
         }
 
         return response()->json([
-            'access_token' => auth()->user()->createToken('API TOKEN '. $request->email)->plainTextToken,
+            'access_token' => auth()->user()->createToken('API TOKEN ' . $request->email)->plainTextToken,
             'user' => auth()->user()->load('roles.permissions')
         ], 200);
     }
 
-    public function verify(){
+    public function verify()
+    {
         $user = auth()->user();
 
         // $user->tokens()->delete();
