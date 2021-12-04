@@ -32,7 +32,7 @@ class User extends Authenticatable
         'address',
         'birthdate',
         'avatar',
-        'major_id'
+        'classroom_id'
     ];
 
     /**
@@ -73,5 +73,9 @@ class User extends Authenticatable
         }
 
         return null;
+    }
+
+    public function classroom(){
+        return $this->belongsTo(Classroom::class);
     }
 }
