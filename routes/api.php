@@ -40,4 +40,5 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('submissions', 'App\Http\Controllers\API\SubmissionController');
     Route::apiResource('campuses', 'App\Http\Controllers\API\CampusController');
     Route::apiResource('roles', 'App\Http\Controllers\API\RoleController');
+    Route::apiResource('assignment-participants', 'App\Http\Controllers\API\AssignmentParticipantController');
 });
