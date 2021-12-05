@@ -14,9 +14,24 @@ class SubjectParticipantController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(SubjectParticipant::where('user_id', auth()->user()->id)->paginate());
+        $subjectParticipant = SubjectParticipant::query();
+
+        // Load Relationship
+        $subjectParticipant->load(['user', 'subject_id']);
+
+        // Filter by User ID
+        if($request->user_id){
+            $subjectParticipant->where('user_id', $request->user_id);
+        }
+
+        // Filter by Subject ID
+        if($request->subject_id){
+            $subjectParticipant->where('subject_id', $request->subject_id);
+        }
+
+        return response()->json($subjectParticipant->paginate());
     }
 
     /**
@@ -30,7 +45,6 @@ class SubjectParticipantController extends Controller
         $request->validate([
             'user_id' => 'required',
             'subject_id' => 'required',
-
         ]);
 
         $data = SubjectParticipant::create($request->all());

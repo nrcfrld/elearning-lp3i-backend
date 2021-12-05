@@ -15,7 +15,7 @@ class CampusSeeder extends Seeder
     public function run()
     {
         Campus::create([
-            'name' => 'Pasar Minggu',
+            'name' => 'Kramat',
         ]);
     }
 }
