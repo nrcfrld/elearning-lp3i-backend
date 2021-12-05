@@ -62,6 +62,7 @@ class SubjectController extends Controller
     public function show(Subject $subject)
     {
         $subject->load('campus');
+        $subject->load('users');
 
         return response()->json([
             'data' => $subject
