@@ -18,7 +18,6 @@ class CreateSubjectsTable extends Migration
             $table->string('name');
             $table->string('code');
             $table->string('generation');
-            $table->integer('campus_id');
             $table->integer('semester');
             $table->integer('sks');
             $table->string('day');
@@ -26,7 +25,8 @@ class CreateSubjectsTable extends Migration
             $table->time('end_at');
             $table->timestamps();
 
-            $table->integer('lecture_id');
+            $table->integer('campus_id')->foreign('campus_id')->references('id')->on('campuses')->onUpdate('cascade')->onDelete('cascade');
+            $table->integer('lecture_id')->foreign('lecture_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

@@ -13,9 +13,10 @@ class SubjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(Subject::paginate());
+        // return response()->json(Subject::paginate());
+        return response()->json(Subject::where('campus_id', $request->campus_id)->paginate());
     }
 
     /**
@@ -56,6 +57,8 @@ class SubjectController extends Controller
      */
     public function show(Subject $subject)
     {
+        $subject->load('campus');
+
         return response()->json([
             'data' => $subject
         ]);
