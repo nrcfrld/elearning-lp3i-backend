@@ -17,8 +17,14 @@ class SubjectController extends Controller
     {
         $subject = Subject::query();
 
+        $subject->load(['lecture', 'campus']);
+
         if($request->lecture_id){
             $subject->where('lecture_id', $request->lecture_id);
+        }
+
+        if($request->campus_id){
+            $subject->where('campus_id', $request->lecture_id);
         }
 
         return response()->json($subject->paginate());
@@ -61,8 +67,7 @@ class SubjectController extends Controller
      */
     public function show(Subject $subject)
     {
-        $subject->load('campus');
-        $subject->load('users');
+        $subject->load(['campus', 'subject']);
 
         return response()->json([
             'data' => $subject

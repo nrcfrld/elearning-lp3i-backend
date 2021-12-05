@@ -11,11 +11,11 @@ class Subject extends Model
 
     protected $guarded = [];
 
-    public function Campus() {
+    public function campus() {
         return $this->belongsTo(Campus::class);
     }
 
-    public function Users() {
-        return $this->belongsTo(Campus::class);
+    public function lecture() {
+        return $this->belongsTo(User::class, "lecture_id");
     }
 }
