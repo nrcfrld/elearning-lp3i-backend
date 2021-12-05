@@ -15,8 +15,13 @@ class SubjectController extends Controller
      */
     public function index(Request $request)
     {
-        // return response()->json(Subject::paginate());
-        return response()->json(Subject::where('campus_id', $request->campus_id)->paginate());
+        $subject = Subject::query();
+
+        if($request->lecture_id){
+            $subject->where('lecture_id', $request->lecture_id);
+        }
+
+        return response()->json($subject->paginate());
     }
 
     /**
