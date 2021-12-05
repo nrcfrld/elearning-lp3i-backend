@@ -14,4 +14,8 @@ class Subject extends Model
     public function Campus() {
         return $this->belongsTo(Campus::class);
     }
+
+    public function Users() {
+        return $this->belongsTo(Campus::class);
+    }
 }

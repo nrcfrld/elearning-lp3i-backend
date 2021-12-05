@@ -17,6 +17,7 @@ class SubjectController extends Controller
     {
         // return response()->json(Subject::paginate());
         return response()->json(Subject::where('campus_id', $request->campus_id)->paginate());
+        return response()->json(Subject::where('lecture_id', $request->lecture_id)->paginate());
     }
 
     /**
@@ -57,6 +58,7 @@ class SubjectController extends Controller
     public function show(Subject $subject)
     {
         $subject->load('campus');
+        $subject->load('users');
 
         return response()->json([
             'data' => $subject
