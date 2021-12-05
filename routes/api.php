@@ -28,11 +28,17 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('classrooms', 'App\Http\Controllers\API\ClassroomController');
     Route::apiResource('subjects', 'App\Http\Controllers\API\SubjectController');
     Route::apiResource('notifications', 'App\Http\Controllers\API\NotificationController')->except(['update']);
-    Route::apiResource('help_categories', 'App\Http\Controllers\API\HelpCategoryController');
+    Route::apiResource('help-categories', 'App\Http\Controllers\API\HelpCategoryController');
     Route::apiResource('helps', 'App\Http\Controllers\API\HelpController');
     Route::apiResource('comments', 'App\Http\Controllers\API\CommentController');
     Route::apiResource('announcements', 'App\Http\Controllers\API\AnnouncementController');
+
+    Route::apiResource('subject-participants', 'App\Http\Controllers\API\SubjectParticipantController');
+    Route::apiResource('assignments', 'App\Http\Controllers\API\AssignmentController');
+    Route::apiResource('topics', 'App\Http\Controllers\API\TopicController');
+
     Route::apiResource('submissions', 'App\Http\Controllers\API\SubmissionController');
     Route::apiResource('campuses', 'App\Http\Controllers\API\CampusController');
     Route::apiResource('roles', 'App\Http\Controllers\API\RoleController');
+    Route::apiResource('assignment-participants', 'App\Http\Controllers\API\AssignmentParticipantController');
 });

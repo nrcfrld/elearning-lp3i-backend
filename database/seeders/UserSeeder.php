@@ -14,8 +14,12 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(10)->create()->each(function ($user) {
+        \App\Models\User::factory(3)->create()->each(function ($user) {
             $user->assignRole('mahasiswa');
+        });
+
+        \App\Models\User::factory(3)->create()->each(function ($user) {
+            $user->assignRole('dosen');
         });
 
         $user = \App\Models\User::create([

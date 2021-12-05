@@ -38,7 +38,6 @@ class SubjectController extends Controller
             'day' => 'required',
             'start_at' => 'required',
             'end_at' => 'required'
-
         ]);
 
         $data = Subject::create($request->all());

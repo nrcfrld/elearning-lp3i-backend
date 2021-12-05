@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Campus;
+use App\Models\StudyProgram;
 use Illuminate\Database\Seeder;
 
-class CampusSeeder extends Seeder
+class StudyProgramSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,8 +14,8 @@ class CampusSeeder extends Seeder
      */
     public function run()
     {
-        Campus::create([
-            'name' => 'Kramat',
+        StudyProgram::create([
+            'name' => 'Manajemen Informatika'
         ]);
     }
 }
