@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Campus;
 use App\Models\StudyProgram;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,8 @@ class StudyProgramController extends Controller
      */
     public function index()
     {
-        return response()->json(StudyProgram::paginate());
+
+        return response()->json(StudyProgram::with('campus')->paginate());
     }
 
     /**
@@ -28,6 +30,7 @@ class StudyProgramController extends Controller
     {
         $request->validate([
             'name' => 'required',
+            'campus_id' => 'required',
         ]);
 
         $data = StudyProgram::create($request->all());
@@ -61,7 +64,8 @@ class StudyProgramController extends Controller
     public function update(Request $request, StudyProgram $study_program)
     {
         $request->validate([
-            'name' => 'required'
+            'name' => 'required',
+            'campus_id' => 'required'
         ]);
 
         $study_program->update($request->all());

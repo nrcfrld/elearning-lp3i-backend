@@ -18,6 +18,8 @@ class CreateStudyProgramsTable extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->timestamps();
+
+            $table->integer('campus_id')->foreign('campus_id')->references('id')->on('campuses')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

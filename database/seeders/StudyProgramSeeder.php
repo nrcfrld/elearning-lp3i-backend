@@ -15,7 +15,8 @@ class StudyProgramSeeder extends Seeder
     public function run()
     {
         StudyProgram::create([
-            'name' => 'Manajemen Informatika'
+            'name' => 'Manajemen Informatika',
+            'campus_id' => 1
         ]);
     }
 }
