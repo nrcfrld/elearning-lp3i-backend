@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\Assignment;
-use Database\Seeders\AssignmentSeeder;
+use App\Models\Attendance;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class AssignmentController extends Controller
+class AttendanceController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(Assignment::paginate(), 200);
+        return response()->json(Attendance::where('meet_id', $request->meet_id)->paginate());
     }
 
     /**
@@ -28,12 +27,12 @@ class AssignmentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'content' => 'required',
             'meet_id' => 'required',
+            'user_id' => 'required',
+            'status' => 'required',
         ]);
 
-        $data = Assignment::create($request->all());
+        $data = Attendance::create($request->all());
 
         return response()->json([
             'message' => 'Tambah data berhasil',
@@ -44,13 +43,20 @@ class AssignmentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Assignment  $assignment
+     * @param  \App\Models\Attendance  $attendance
      * @return \Illuminate\Http\Response
      */
-    public function show(Assignment $assignment)
+    public function show(Attendance $attendance)
     {
+        $attendance->update([
+            'is_read' => 1
+        ]);
+
+        $attendance->load('meet');
+        $attendance->load('user');
+
         return response()->json([
-            'data' => $assignment
+            'data' => $attendance
         ]);
     }
 
@@ -58,34 +64,35 @@ class AssignmentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Assignment  $assignment
+     * @param  \App\Models\Attendance  $attendance
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Assignment $assignment)
+    public function update(Request $request, Attendance $attendance)
     {
         $request->validate([
-            'name' => 'required',
-            'content' => 'required',
             'meet_id' => 'required',
+            'user_id' => 'required',
+            'status' => 'required',
+
         ]);
 
-        $assignment->update($request->all());
+        $attendance->update($request->all());
 
         return response()->json([
             'message' => 'Ubah data berhasil',
-            'data' => $assignment
+            'data' => $attendance
         ], 201);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Assignment  $assignment
+     * @param  \App\Models\Attendance  $attendance
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Assignment $assignment)
+    public function destroy(Attendance $attendance)
     {
-        $assignment->delete();
+        $attendance->delete();
 
         return response()->json([
             'message' => 'Hapus data Berhasil'
