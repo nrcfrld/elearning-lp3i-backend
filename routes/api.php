@@ -24,7 +24,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('users', 'App\Http\Controllers\API\UserController');
     Route::post('/users/import', 'App\Http\Controllers\API\UserController@import');
     Route::apiResource('configurations', 'App\Http\Controllers\API\ConfigurationController');
-    Route::apiResource('study-program', 'App\Http\Controllers\API\StudyProgramController');
+    Route::apiResource('study-programs', 'App\Http\Controllers\API\StudyProgramController');
     Route::apiResource('majors', 'App\Http\Controllers\API\MajorController');
     Route::apiResource('classrooms', 'App\Http\Controllers\API\ClassroomController');
     Route::apiResource('subjects', 'App\Http\Controllers\API\SubjectController');
