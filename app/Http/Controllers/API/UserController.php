@@ -4,10 +4,12 @@ namespace App\Http\Controllers\API;
 
 use Exception;
 use App\Models\User;
+use App\Imports\UsersImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
@@ -139,6 +141,14 @@ class UserController extends Controller
 
         return response()->json([
             'message' => 'Hapus data Berhasil'
+        ], 200);
+    }
+
+    public function import(Request $request){
+        Excel::import(new UsersImport, $request->file('file'));
+
+        return response()->json([
+            'message' => 'Berhasil Import Data'
         ], 200);
     }
 }

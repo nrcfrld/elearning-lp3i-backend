@@ -22,11 +22,14 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     // Authenticated Only
     Route::post('auth/verify', 'App\Http\Controllers\API\AuthController@verify')->name('api.auth.verify');
     Route::apiResource('users', 'App\Http\Controllers\API\UserController');
+    Route::post('/users/import', 'App\Http\Controllers\API\UserController@import');
     Route::apiResource('configurations', 'App\Http\Controllers\API\ConfigurationController');
     Route::apiResource('study-program', 'App\Http\Controllers\API\StudyProgramController');
     Route::apiResource('majors', 'App\Http\Controllers\API\MajorController');
     Route::apiResource('classrooms', 'App\Http\Controllers\API\ClassroomController');
     Route::apiResource('subjects', 'App\Http\Controllers\API\SubjectController');
+    Route::post('subjects/export', 'App\Http\Controllers\API\SubjectController@export');
+
     Route::apiResource('notifications', 'App\Http\Controllers\API\NotificationController')->except(['update']);
     Route::apiResource('help-categories', 'App\Http\Controllers\API\HelpCategoryController');
     Route::apiResource('helps', 'App\Http\Controllers\API\HelpController');

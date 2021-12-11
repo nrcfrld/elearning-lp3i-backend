@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Exports\SubjectsExport;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SubjectController extends Controller
 {
@@ -17,7 +20,7 @@ class SubjectController extends Controller
     {
         $subject = Subject::query();
 
-        $subject->load(['lecture', 'campus']);
+        $subject->with(['lecture', 'campus']);
 
         if($request->lecture_id){
             $subject->where('lecture_id', $request->lecture_id);
@@ -118,5 +121,13 @@ class SubjectController extends Controller
         return response()->json([
             'message' => 'Hapus data Berhasil'
         ], 200);
+    }
+
+    public function export(){
+        Excel::store(new SubjectsExport, 'public/Matakuliah.xlsx', 'local', null, [
+            'visibility' => 'private'
+        ]);
+
+        return asset(Storage::url('Matakuliah.xlsx'));
     }
 }

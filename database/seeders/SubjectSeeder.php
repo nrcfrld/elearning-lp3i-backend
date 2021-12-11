@@ -37,7 +37,7 @@ class SubjectSeeder extends Seeder
         ]);
 
         Subject::create([
-            'name' => 'Pemrogramawan Web',
+            'name' => 'Pemograman Web',
             'code' => 'PW001',
             'generation' => '2020',
             'campus_id' => $campus->id,
@@ -47,6 +47,32 @@ class SubjectSeeder extends Seeder
             'day' => 'Senin',
             'start_at' => '08:00:00',
             'end_at' => '11:40:00'
+        ]);
+
+        Subject::create([
+            'name' => 'Pemograman Visual',
+            'code' => 'PV001',
+            'generation' => '2020',
+            'campus_id' => $campus->id,
+            'semester' => 4,
+            'lecture_id' => $user->id,
+            'sks' => 4,
+            'day' => 'Selasa',
+            'start_at' => '08:00:00',
+            'end_at' => '11:40:00'
+        ]);
+
+        Subject::create([
+            'name' => 'UI/UX Design',
+            'code' => 'UI001',
+            'generation' => '2021',
+            'campus_id' => $campus->id,
+            'semester' => 1,
+            'lecture_id' => $user->id,
+            'sks' => 4,
+            'day' => "Jum'at",
+            'start_at' => '13:00:00',
+            'end_at' => '16:40:00'
         ]);
     }
 }
