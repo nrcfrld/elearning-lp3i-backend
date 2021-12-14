@@ -9,9 +9,10 @@ class Classroom extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'code',
-        'major_id'
-    ];
+    protected $guarded = [];
+
+    public function majors()
+    {
+        return $this->belongsTo(Major::class);
+    }
 }

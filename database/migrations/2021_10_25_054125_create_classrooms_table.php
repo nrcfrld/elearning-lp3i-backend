@@ -19,7 +19,7 @@ class CreateClassroomsTable extends Migration
             $table->string('code');
             $table->timestamps();
 
-            $table->integer('major_id');
+            $table->integer('major_id')->foreign('major_id')->references('id')->on('majors')->onUpdate('cascade')->onDelete('cascade');;
         });
     }
 
