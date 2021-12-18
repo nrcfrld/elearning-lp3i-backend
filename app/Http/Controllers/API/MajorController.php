@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Models\Major;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\StudyProgram;
 
 class MajorController extends Controller
 {
@@ -15,7 +16,7 @@ class MajorController extends Controller
      */
     public function index()
     {
-        return response()->json(Major::paginate());
+        return response()->json(Major::with("studyProgram")->paginate());
     }
 
     /**
@@ -49,6 +50,8 @@ class MajorController extends Controller
      */
     public function show(Major $major)
     {
+        $major->load(['study_program']);
+
         return response()->json([
             'data' => $major
         ]);

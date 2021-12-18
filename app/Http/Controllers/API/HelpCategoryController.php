@@ -15,7 +15,7 @@ class HelpCategoryController extends Controller
      */
     public function index()
     {
-        return response()->json(HelpCategory::paginate());
+        return response()->json(HelpCategory::with('parent')->paginate());
     }
 
     /**

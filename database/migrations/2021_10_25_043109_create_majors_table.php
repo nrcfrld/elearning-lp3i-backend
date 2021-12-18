@@ -19,7 +19,7 @@ class CreateMajorsTable extends Migration
             $table->string('code');
             $table->timestamps();
 
-            $table->integer('study_program_id');
+            $table->integer('study_program_id')->foreign('study_program_id')->references('id')->on('study-programs')->onUpdate('cascade')->onDelete('cascade');;;
         });
     }
 

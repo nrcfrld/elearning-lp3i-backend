@@ -11,7 +11,7 @@ class Classroom extends Model
 
     protected $guarded = [];
 
-    public function majors()
+    public function major()
     {
         return $this->belongsTo(Major::class);
     }

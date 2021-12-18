@@ -53,9 +53,6 @@ class TopicController extends Controller
      */
     public function show(Topic $topic)
     {
-        $topic->update([
-            'is_read' => 1
-        ]);
 
         $topic->load('meet');
 

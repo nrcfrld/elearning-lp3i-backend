@@ -15,7 +15,7 @@ class ClassroomController extends Controller
      */
     public function index(Request $request)
     {
-        return response()->json(Classroom::where('major_id', $request->major_id)->paginate());
+        return response()->json(Classroom::with("major")->paginate());
     }
 
     /**
@@ -49,11 +49,7 @@ class ClassroomController extends Controller
      */
     public function show(Classroom $classroom)
     {
-        $classroom->update([
-            'is_read' => 1
-        ]);
-
-        $classroom->load('major');
+        $classroom->load(['major']);
 
         return response()->json([
             'data' => $classroom
