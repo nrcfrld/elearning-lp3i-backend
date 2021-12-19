@@ -13,4 +13,8 @@ class Announcement extends Model
         'title',
         'body'
     ];
+
+    public function classroom(){
+        return $this->belongsTo(Classroom::class);
+    }
 }

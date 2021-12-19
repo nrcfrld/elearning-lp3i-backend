@@ -56,7 +56,8 @@ class User extends Authenticatable
 
     protected $appends= [
         'avatar_url',
-        'role'
+        'role',
+        'label'
     ];
 
     public function getAvatarUrlAttribute(){
@@ -73,6 +74,10 @@ class User extends Authenticatable
         }
 
         return null;
+    }
+
+    public function getLabelAttribute(){
+        return $this->identity_number . " - " . $this->name;
     }
 
     public function classroom(){

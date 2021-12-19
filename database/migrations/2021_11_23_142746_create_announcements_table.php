@@ -17,6 +17,7 @@ class CreateAnnouncementsTable extends Migration
             $table->id();
             $table->string("title");
             $table->text("body");
+            $table->integer('classroom_id')->nullable();
             $table->timestamps();
         });
     }

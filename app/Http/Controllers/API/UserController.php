@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -18,10 +19,18 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $user = User::query();
+
+        if($request->role){
+            $user->whereHas('roles', function ($q) use($request){
+                $q->where('name', $request->role);
+            });
+        }
+
         return response()->json(
-            User::with('roles')->orderBy('created_at', 'desc')->paginate()
+            $user->paginate()
             ,200
         );
     }
@@ -44,7 +53,9 @@ class UserController extends Controller
                 'phone_number' => 'required|min:11|max:15|unique:users,phone_number'
             ]);
 
-            if($request->role_id == 3){
+            $role = Role::findById($request->role_id, 'api');
+
+            if($role->name == 'mahasiswa'){
                 $request->validate([
                     'classroom_id' => 'required'
                 ]);

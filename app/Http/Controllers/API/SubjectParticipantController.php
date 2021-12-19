@@ -19,7 +19,7 @@ class SubjectParticipantController extends Controller
         $subjectParticipant = SubjectParticipant::query();
 
         // Load Relationship
-        $subjectParticipant->load(['user', 'subject_id']);
+        $subjectParticipant->with(['user', 'subject']);
 
         // Filter by User ID
         if($request->user_id){
