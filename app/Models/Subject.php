@@ -18,4 +18,8 @@ class Subject extends Model
     public function lecture() {
         return $this->belongsTo(User::class, "lecture_id");
     }
+
+    public function participants(){
+        return $this->belongsToMany(User::class, 'subject_participants', 'user_id');
+    }
 }
