@@ -22,6 +22,17 @@ class SubjectController extends Controller
 
         $subject->with(['lecture', 'campus']);
 
+
+        if(auth()->user()->hasRole('dosen')){
+            $subject->where('lecture_id', auth()->user()->id);
+        }
+
+        if(auth()->user()->hasRole('mahasiswa')){
+            $subject->whereHas('participants', function($q) {
+                $q->where('user_id', auth()->user()->id);
+            });
+        }
+
         if($request->lecture_id){
             $subject->where('lecture_id', $request->lecture_id);
         }

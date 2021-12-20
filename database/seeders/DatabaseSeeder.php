@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             ConfigurationSeeder::class,
             SubjectSeeder::class,
             SubjectParticipantSeeder::class,
+            HelpCategorySeeder::class
         ]);
     }
 }

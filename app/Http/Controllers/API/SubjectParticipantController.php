@@ -31,7 +31,7 @@ class SubjectParticipantController extends Controller
             $subjectParticipant->where('subject_id', $request->subject_id);
         }
 
-        return response()->json($subjectParticipant->paginate());
+        return response()->json($subjectParticipant->paginate(50));
     }
 
     /**
