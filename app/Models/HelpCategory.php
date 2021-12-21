@@ -13,6 +13,6 @@ class HelpCategory extends Model
 
     public function parent()
     {
-        return $this->belongsTo(HelpCategory::class);
+        return $this->belongsTo(HelpCategory::class, "parent_id", "id");
     }
 }
