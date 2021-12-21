@@ -32,7 +32,6 @@ class MeetController extends Controller
             'subject_id' => 'required',
             'is_can_comment' => 'required',
             'is_submitted_attendance' => 'required',
-
         ]);
 
         $data = Meet::create($request->all());

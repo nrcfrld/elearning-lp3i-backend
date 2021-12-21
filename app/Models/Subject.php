@@ -20,6 +20,6 @@ class Subject extends Model
     }
 
     public function participants(){
-        return $this->belongsToMany(User::class, 'subject_participants', 'user_id');
+        return $this->belongsToMany(User::class, 'subject_participants', 'subject_id');
     }
 }

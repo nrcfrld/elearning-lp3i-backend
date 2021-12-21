@@ -17,7 +17,7 @@ class CreateMeetsTable extends Migration
             $table->id();
             $table->string('title');
             $table->boolean('is_can_comment');
-            $table->boolean('is_submitted_attendance');
+            $table->boolean('is_submitted_attendance')->default(false);
             $table->timestamps();
 
             $table->integer('subject_id')->foreign('subject_id')->references('id')->on('subject')->onUpdate('cascade')->onDelete('cascade');

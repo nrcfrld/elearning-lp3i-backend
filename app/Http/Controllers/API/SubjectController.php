@@ -20,7 +20,7 @@ class SubjectController extends Controller
     {
         $subject = Subject::query();
 
-        $subject->with(['lecture', 'campus']);
+        $subject->with(['lecture', 'campus', 'participants']);
 
 
         if(auth()->user()->hasRole('dosen')){
@@ -29,7 +29,7 @@ class SubjectController extends Controller
 
         if(auth()->user()->hasRole('mahasiswa')){
             $subject->whereHas('participants', function($q) {
-                $q->where('user_id', auth()->user()->id);
+                return $q->where('user_id', auth()->user()->id);
             });
         }
 
