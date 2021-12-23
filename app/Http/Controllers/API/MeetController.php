@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\Attendance;
 use App\Models\Meet;
-use App\Models\Subject;
+use Error;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 
 class MeetController extends Controller
 {
@@ -16,7 +18,7 @@ class MeetController extends Controller
      */
     public function index(Request $request)
     {
-        return response()->json(meet::where('subject_id', $request->subject_id)->paginate());
+        return response()->json(Meet::where('subject_id', $request->subject_id)->paginate(14));
     }
 
     /**
@@ -27,19 +29,36 @@ class MeetController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'subject_id' => 'required',
-            'is_can_comment' => 'required',
-            'is_submitted_attendance' => 'required',
-        ]);
+        try{
+            DB::beginTransaction();
+            $request->validate([
+                'title' => 'required',
+                'subject_id' => 'required',
+                'is_can_comment' => 'required',
+                'is_submitted_attendance' => 'required',
+            ]);
 
-        $data = Meet::create($request->all());
+            $meet = Meet::create($request->all());
+            foreach($meet->subject->participants as $participant){
+                Attendance::create([
+                    'meet_id' => $meet->id,
+                    'status' => 'tidak hadir',
+                    'user_id' => $participant->id
+                ]);
+            }
 
-        return response()->json([
-            'message' => 'Tambah data berhasil',
-            'data' => $data
-        ], 201);
+            DB::commit();
+            return response()->json([
+                'message' => 'Tambah data berhasil',
+                'data' => $meet
+            ], 201);
+        }catch(Error $error){
+            DB::rollBack();
+            return response()->json([
+                'message' => 'Tambah data berhasil',
+                'data' => $error
+            ], 500);
+        }
     }
 
     /**
@@ -50,7 +69,7 @@ class MeetController extends Controller
      */
     public function show(Meet $meet)
     {
-        $meet->load(['subject']);
+        $meet->load(['subject.lecture']);
 
         return response()->json([
             'data' => $meet
@@ -71,10 +90,13 @@ class MeetController extends Controller
             'subject_id' => 'required',
             'is_can_comment' => 'required',
             'is_submitted_attendance' => 'required',
-
         ]);
 
-        $meet->update($request->all());
+        $meet->update([
+            'title' => $request->title,
+            'is_can_comment' => $request->is_can_comment,
+            'is_submitted_attendance' => $request->is_submitted_attendance
+        ]);
 
         return response()->json([
             'message' => 'Ubah data berhasil',

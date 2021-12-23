@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Attendance;
+use App\Models\Meet;
+use Error;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use PhpParser\Node\Expr\Throw_;
 
 class AttendanceController extends Controller
 {
@@ -15,7 +19,7 @@ class AttendanceController extends Controller
      */
     public function index(Request $request)
     {
-        return response()->json(Attendance::where('meet_id', $request->meet_id)->paginate());
+        return response()->json(Attendance::with(['user'])->where('meet_id', $request->meet_id)->paginate());
     }
 
     /**
@@ -48,10 +52,6 @@ class AttendanceController extends Controller
      */
     public function show(Attendance $attendance)
     {
-        $attendance->update([
-            'is_read' => 1
-        ]);
-
         $attendance->load('meet');
         $attendance->load('user');
 
@@ -69,19 +69,17 @@ class AttendanceController extends Controller
      */
     public function update(Request $request, Attendance $attendance)
     {
-        $request->validate([
-            'meet_id' => 'required',
-            'user_id' => 'required',
-            'status' => 'required',
+        $data = $request->all();
 
-        ]);
-
-        $attendance->update($request->all());
+        if($request->has('document')){
+            $data['document'] = $request->file('document')->store('/file');
+        }
+        $attendance->update($data);
 
         return response()->json([
             'message' => 'Ubah data berhasil',
             'data' => $attendance
-        ], 201);
+        ], 200);
     }
 
     /**
@@ -97,5 +95,35 @@ class AttendanceController extends Controller
         return response()->json([
             'message' => 'Hapus data Berhasil'
         ], 200);
+    }
+
+    public function submitAttendance(Request $request){
+        try{
+            $data = $request->all();
+            $attendance = Attendance::where([
+                ['meet_id', $request->meet_id],
+                ['user_id', auth()->user()->id]
+            ])->first();
+
+            if(!$attendance || $attendance == null){
+                throw new Exception('Data Attendance Tidak Ditemukan.');
+            }
+
+            if($request->has('document')){
+                $data['document'] = $request->file('document')->store('/public/files');
+            }
+
+            $attendance->update($data);
+
+            return response()->json([
+                'message' => 'Berhasil absensi',
+                'data' => $attendance
+            ], 200);
+        }catch(Exception $error){
+            return response()->json([
+                'message' => 'Terjadi kesalahan',
+                'data' => $error
+            ], 500);
+        }
     }
 }

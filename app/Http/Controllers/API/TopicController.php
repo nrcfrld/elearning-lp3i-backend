@@ -32,9 +32,7 @@ class TopicController extends Controller
             'name' => 'required',
             'content' => 'required',
             'type' => 'required',
-            'meet_id' => 'required',
-            'descriptions' => 'required'
-
+            'meet_id' => 'required'
         ]);
 
         $data = Topic::create($request->all());

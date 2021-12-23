@@ -18,7 +18,7 @@ class CreateTopicsTable extends Migration
             $table->string("name");
             $table->text("content");
             $table->enum("type", ["text", "video"]);
-            $table->text("descriptions");
+            $table->text("descriptions")->nullable();
             $table->timestamps();
 
             $table->integer('meet_id')->foreign('meet_id')->references('id')->on('meets')->onUpdate('cascade')->onDelete('cascade');
